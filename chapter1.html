@@ -1,5 +1,21 @@
-<h1>chapter 1</h1>
-Chapter 1 summary
-HTML
-CSS
-JavaScript
+<head>
+  <title>나이 계산기</title>
+</head>
+<body>
+  <h1>나이 계산기</h1>
+  <button onclick="checkAdult()">나이 확인하기</button>
+
+  <script>
+    function checkAdult() {
+      const currentYear = 2025; // 현재 연도
+      let birthYear = parseInt(prompt("태어난 연도를 입력하세요. (YYYY)", ""));
+      let age = currentYear - birthYear + 1;
+
+      if (age < 20) {
+        alert("성인이 아닙니다.");
+      }
+
+      alert(`${currentYear}년 현재, ${age}세입니다.`);
+    }
+  </script>
+</body>
