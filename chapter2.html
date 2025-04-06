@@ -3,21 +3,18 @@
 </head>
 <body>
   <h1>2초마다 인사말 출력</h1>
-  <p>콘솔 창에서 결과를 확인하세요!</p>
+  <p>콘솔 창에서 결과를 확인하세요</p>
   <button onclick="startGreeting()">시작</button>
 
   <script>
-    function startGreeting() {
-      let counter = 0;
-      let timer = setInterval(() => {
-        console.log("안녕하세요?"); // 인사 출력
-        counter++; // 인사 횟수 증가
+    let counter = 0;
+    let timer = setInterval(() => {
+      console.log("안녕하세요?"); // 인사 출력
+      counter++; // 인사 횟수 증가
 
-        if (counter === 5) {
-          clearInterval(timer); // 타이머 종료
-          console.log("인사 종료!");
-        }
-      }, 2000); // 2초 간격
-    }
-  </script>
+      if (counter === 5) {
+        clearInterval(timer); // 5회 후 종료
+        console.log("인사 종료");
+      }
+    }, 2000); // 2초마다 실행
 </body>
