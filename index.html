@@ -3,79 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3E Clone</title>
+  <title>MoodMate</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Arial Black', sans-serif;
       background-color: #000;
+      color: #fff;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: black;
+    }
+    nav a {
       color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin: 0 1rem;
+      font-weight: bold;
     }
     header {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: linear-gradient(to bottom right, #0f0f0f, #1a1a1a);
-      padding: 2rem;
+      padding: 3rem 1rem 2rem;
     }
     header h1 {
-      font-size: 3rem;
+      font-size: 5rem;
+      margin: 2rem 0;
       font-weight: bold;
-      max-width: 700px;
-      line-height: 1.4;
     }
-    section {
-      padding: 4rem 2rem;
-      max-width: 900px;
-      margin: auto;
-      text-align: center;
-    }
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    section p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #ccc;
-    }
-    .button {
-      display: inline-block;
+    .images {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
       margin-top: 2rem;
-      padding: 0.75rem 1.5rem;
-      background-color: white;
-      color: black;
-      border-radius: 30px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: 0.3s;
     }
-    .button:hover {
-      background-color: #ddd;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #888;
+    .images img {
+      width: 200px;
+      height: auto;
     }
   </style>
 </head>
 <body>
+  <nav>
+    <div>
+      <a href="#">Journey</a>
+      <a href="#">Moods</a>
+    </div>
+    <div>
+      <a href="#">Inspire</a>
+      <a href="#">Connect</a>
+    </div>
+  </nav>
+
   <header>
-    <h1>Experience, Explore, Evolve — a creative space where ideas ignite.</h1>
+    <h1>MOODMATE</h1>
+    <div class="images">
+      <img src="376b4973-8118-42d9-8f1c-3ff818b1a978.png" alt="Smile Icon" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Music_Icon.svg/1200px-Music_Icon.svg.png" alt="Music Note Icon" />
+    </div>
   </header>
-
-  <section>
-    <h2>What is 3E?</h2>
-    <p>3E stands for Experience, Explore, and Evolve. It's a space where we dive deep into creative technology, design thinking, and the power of curiosity. Stay tuned for content, projects, and inspiration.</p>
-    <a href="#" class="button">Learn More</a>
-  </section>
-
-  <footer>
-    &copy; 2024 3E Project. All rights reserved.
-  </footer>
 </body>
 </html>
