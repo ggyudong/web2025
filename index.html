@@ -13,11 +13,15 @@
       text-align: center;
     }
     nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
       background-color: black;
+      z-index: 1000;
     }
     nav a {
       color: white;
@@ -27,11 +31,11 @@
       font-weight: bold;
     }
     header {
-      padding: 3rem 1rem 2rem;
+      padding-top: 6rem;
     }
     header h1 {
       font-size: 5rem;
-      margin: 2rem 0;
+      margin: 2rem 0 1rem;
       font-weight: bold;
     }
     .images {
@@ -40,11 +44,37 @@
       align-items: center;
       gap: 3rem;
       flex-wrap: wrap;
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
     .images img {
       width: 200px;
       height: auto;
+    }
+    .question {
+      margin-top: 3rem;
+      font-size: 2rem;
+    }
+    .mood-buttons {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .mood-buttons button {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #recommend {
+      margin-top: 5rem;
+      padding: 3rem 1rem;
+    }
+    iframe {
+      margin-top: 1rem;
     }
   </style>
 </head>
@@ -63,9 +93,46 @@
   <header>
     <h1>MOODMATE</h1>
     <div class="images">
-      <img src="smile.png" alt="Smile Icon" />
-      <img src="musical-note.png" alt="Music Note Icon" />
+      <img src="smile1.png" alt="Smile Icon" />
+      <img src="music-note1.png" alt="Music Note Icon" />
+    </div>
+    <div class="question">오늘의 기분은 어떤가요?</div>
+    <div class="mood-buttons">
+      <button style="background-color:#FFD700" onclick="handleMood('happy')">😊 기쁨</button>
+      <button style="background-color:#708090" onclick="handleMood('sad')">😢 슬픔</button>
+      <button style="background-color:#A9A9A9" onclick="handleMood('tired')">😩 피곤</button>
     </div>
   </header>
+
+  <section id="recommend">
+    <h2 id="quote">여기에 명언이 표시됩니다</h2>
+    <iframe id="musicFrame" width="300" height="200" frameborder="0" allowfullscreen></iframe>
+  </section>
+
+  <script>
+    function handleMood(mood) {
+      const quote = {
+        happy: "오늘도 웃는 하루 되세요!",
+        sad: "지금 이 순간도 지나갈 거예요.",
+        tired: "조금 쉬어도 괜찮아요."
+      };
+      const colors = {
+        happy: "#FFD700",
+        sad: "#708090",
+        tired: "#A9A9A9"
+      };
+      const music = {
+        happy: "https://www.youtube.com/embed/ZbZSe6N_BXs",
+        sad: "https://www.youtube.com/embed/hLQl3WQQoQ0",
+        tired: "https://www.youtube.com/embed/jfKfPfyJRdk"
+      };
+
+      document.body.style.backgroundColor = colors[mood];
+      document.getElementById("quote").innerText = quote[mood];
+      document.getElementById("musicFrame").src = music[mood];
+
+      document.getElementById("recommend").scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
 </body>
 </html>
