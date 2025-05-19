@@ -12,16 +12,18 @@
       color: #fff;
       text-align: center;
     }
-    nav {
+    nav, header {
       position: fixed;
       top: 0;
       width: 100%;
+      background-color: black;
+      z-index: 1000;
+    }
+    nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
-      background-color: black;
-      z-index: 1000;
     }
     nav a {
       color: white;
@@ -32,6 +34,7 @@
     }
     header {
       padding-top: 6rem;
+      padding-bottom: 2rem;
     }
     header h1 {
       font-size: 5rem;
@@ -51,7 +54,7 @@
       height: auto;
     }
     .question {
-      margin-top: 3rem;
+      margin-top: 18rem;
       font-size: 2rem;
     }
     .mood-buttons {
@@ -96,13 +99,14 @@
       <img src="smile1.png" alt="Smile Icon" />
       <img src="musical-note1.png" alt="Music Note Icon" />
     </div>
-    <div class="question">오늘의 기분은 어떤가요?</div>
-    <div class="mood-buttons">
-      <button style="background-color:#FFD700" onclick="handleMood('happy')">😊 기쁨</button>
-      <button style="background-color:#708090" onclick="handleMood('sad')">😢 슬픔</button>
-      <button style="background-color:#A9A9A9" onclick="handleMood('tired')">😩 피곤</button>
-    </div>
   </header>
+
+  <div class="question">오늘의 기분은 어떤가요?</div>
+  <div class="mood-buttons">
+    <button style="background-color:#FFD700" onclick="handleMood('happy')">😊 기쁨</button>
+    <button style="background-color:#708090" onclick="handleMood('sad')">😢 슬픔</button>
+    <button style="background-color:#A9A9A9" onclick="handleMood('tired')">😩 피곤</button>
+  </div>
 
   <section id="recommend">
     <h2 id="quote">여기에 명언이 표시됩니다</h2>
