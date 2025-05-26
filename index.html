@@ -17,21 +17,18 @@
       text-align: center;
     }
 
-    /* 상단 메뉴바(nav)와 헤더(header)를 고정 */
-    nav, header {
+    /* 메뉴바(nav) 고정 - 가장 위 */
+    nav {
       position: fixed;
       top: 0;
       width: 100%;
+      height: 60px;
       background-color: black;
       z-index: 1000;
-    }
-
-    /* 메뉴바(nav) 내부 설정 */
-    nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
+      padding: 0 2rem;
     }
 
     /* 메뉴 항목 디자인 */
@@ -43,16 +40,21 @@
       font-weight: bold;
     }
 
-    /* 헤더 안쪽 여백 */
+    /* 헤더 고정 - 메뉴 아래에 위치 */
     header {
-      padding-top: 6rem;
+      position: fixed;
+      top: 60px; /* 메뉴바 높이만큼 아래로 */
+      width: 100%;
+      background-color: black;
+      z-index: 999;
+      padding-top: 2rem;
       padding-bottom: 2rem;
     }
 
     /* "MOODMATE" 타이틀 스타일 */
     header h1 {
       font-size: 5rem;
-      margin: 2rem 0 1rem;
+      margin: 1rem 0;
       font-weight: bold;
     }
 
@@ -74,7 +76,7 @@
 
     /* 질문 텍스트 영역 */
     .question {
-      margin-top: 18rem;
+      margin-top: 420px; /* 고정된 nav + header 높이만큼 확보 */
       font-size: 2rem;
     }
 
@@ -126,13 +128,10 @@
   <header>
     <h1>MOODMATE</h1>
     <div class="images">
-      <img src="smile1.png" alt="Smile Icon" />
-      <img src="musical-note1.png" alt="Music Note Icon" />
+      <img src="smile.png" alt="Smile Icon" />
+      <img src="music.png" alt="Music Note Icon" />
     </div>
   </header>
-
-  <!-- 고정된 header 아래 공간 확보용 더미(div) -->
-  <div style="height: 450px;"></div>
 
   <!-- 감정 질문 -->
   <div class="question">오늘의 기분은 어떤가요?</div>
