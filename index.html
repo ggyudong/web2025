@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- 기본 설정 및 문자 인코딩 -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MoodMate</title>
+
+  <!-- 전체 스타일 정의 -->
   <style>
+    /* 페이지 기본 설정 */
     body {
       margin: 0;
       font-family: 'Arial Black', sans-serif;
@@ -12,6 +16,8 @@
       color: #fff;
       text-align: center;
     }
+
+    /* 상단 메뉴바(nav)와 헤더(header)를 고정 */
     nav, header {
       position: fixed;
       top: 0;
@@ -19,12 +25,16 @@
       background-color: black;
       z-index: 1000;
     }
+
+    /* 메뉴바(nav) 내부 설정 */
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
     }
+
+    /* 메뉴 항목 디자인 */
     nav a {
       color: white;
       text-decoration: none;
@@ -32,15 +42,21 @@
       margin: 0 1rem;
       font-weight: bold;
     }
+
+    /* 헤더 안쪽 여백 */
     header {
       padding-top: 6rem;
       padding-bottom: 2rem;
     }
+
+    /* "MOODMATE" 타이틀 스타일 */
     header h1 {
       font-size: 5rem;
       margin: 2rem 0 1rem;
       font-weight: bold;
     }
+
+    /* 헤더 아래 이미지 정렬 */
     .images {
       display: flex;
       justify-content: center;
@@ -49,14 +65,20 @@
       flex-wrap: wrap;
       margin-top: 1rem;
     }
+
+    /* 이미지 크기 설정 */
     .images img {
       width: 200px;
       height: auto;
     }
+
+    /* 질문 텍스트 영역 */
     .question {
       margin-top: 18rem;
       font-size: 2rem;
     }
+
+    /* 감정 버튼 그룹 정렬 */
     .mood-buttons {
       margin-top: 2rem;
       display: flex;
@@ -64,6 +86,8 @@
       justify-content: center;
       gap: 1rem;
     }
+
+    /* 감정 버튼 스타일 */
     .mood-buttons button {
       padding: 1rem 2rem;
       border: none;
@@ -72,16 +96,21 @@
       cursor: pointer;
       font-weight: bold;
     }
+
+    /* 추천 콘텐츠 영역 */
     #recommend {
       margin-top: 5rem;
       padding: 3rem 1rem;
     }
+
+    /* 유튜브 iframe 여백 */
     iframe {
       margin-top: 1rem;
     }
   </style>
 </head>
 <body>
+  <!-- 상단 메뉴바 -->
   <nav>
     <div>
       <a href="#">Journey</a>
@@ -93,28 +122,52 @@
     </div>
   </nav>
 
+  <!-- 고정된 제목 영역 -->
   <header>
     <h1>MOODMATE</h1>
     <div class="images">
-      <img src="smile1.png" alt="Smile Icon" />
-      <img src="musical-note1.png" alt="Music Note Icon" />
+      <img src="smile.png" alt="Smile Icon" />
+      <img src="music.png" alt="Music Note Icon" />
     </div>
-  
+  </header>
+
+  <!-- 고정된 header 아래 공간 확보용 더미(div) -->
   <div style="height: 450px;"></div>
 
+  <!-- 감정 질문 -->
   <div class="question">오늘의 기분은 어떤가요?</div>
+
+  <!-- 감정 선택 버튼들 -->
   <div class="mood-buttons">
     <button style="background-color:#FFD700" onclick="handleMood('happy')">😊 기쁨</button>
     <button style="background-color:#708090" onclick="handleMood('sad')">😢 슬픔</button>
     <button style="background-color:#A9A9A9" onclick="handleMood('tired')">😩 피곤</button>
   </div>
 
+  <!-- 추천 콘텐츠 표시 영역 -->
   <section id="recommend">
     <h2 id="quote">여기에 명언이 표시됩니다</h2>
     <iframe id="musicFrame" width="300" height="200" frameborder="0" allowfullscreen></iframe>
   </section>
 
+  <!-- 자바스크립트 기능 -->
   <script>
+    // 접속 시마다 배경색과 타이틀 색 랜덤 적용
+    window.addEventListener("DOMContentLoaded", () => {
+      const colors = ["#FFD700", "#FF69B4", "#87CEFA", "#98FB98", "#FFA07A", "#DA70D6"];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+      // 배경색 변경
+      document.body.style.backgroundColor = randomColor;
+
+      // 타이틀 색상 변경
+      const title = document.querySelector("header h1");
+      if (title) {
+        title.style.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+    });
+
+    // 감정 선택 시 추천 정보 출력 및 스크롤 이동
     function handleMood(mood) {
       const quote = {
         happy: "오늘도 웃는 하루 되세요!",
@@ -132,10 +185,16 @@
         tired: "https://www.youtube.com/embed/jfKfPfyJRdk"
       };
 
+      // 배경색 변경
       document.body.style.backgroundColor = colors[mood];
+
+      // 명언 출력
       document.getElementById("quote").innerText = quote[mood];
+
+      // 음악 변경
       document.getElementById("musicFrame").src = music[mood];
 
+      // 추천 섹션으로 부드럽게 스크롤 이동
       document.getElementById("recommend").scrollIntoView({ behavior: "smooth" });
     }
   </script>
