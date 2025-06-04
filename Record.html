@@ -2,64 +2,275 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>감정 기록 예시</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>감정 일기 | MOODMATE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet">
   <style>
-    .mood-buttons { margin: 2rem 0; }
-    .mood-buttons button { font-size: 1.2rem; margin: 0 0.5rem; padding: 0.7em 1.2em; }
-    #historyList { margin: 2rem 0; }
-    #historyList ul { list-style: none; padding: 0; }
-    #historyList li { margin-bottom: 0.7em; font-size: 1.1rem; }
-    .date { color: #888; font-size: 0.95em; margin-right: 0.5em; }
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: 'Montserrat', 'Arial Black', Arial, sans-serif;
+      min-height: 100vh;
+      padding-top: 80px;
+      box-sizing: border-box;
+      transition: background 0.5s;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2vw;
+    }
+    .title {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #ffd700;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.2em;
+      text-shadow: 0 2px 20px #000, 0 1px 0 #ffd700;
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      color: #b0e0e6;
+      margin-bottom: 2.5vw;
+      letter-spacing: 0.02em;
+    }
+    .record-box {
+      background: rgba(30,30,30,0.97);
+      border-radius: 22px;
+      max-width: 480px;
+      margin: 2vw auto 3vw auto;
+      padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+      box-shadow: 0 6px 32px #000c;
+      text-align: center;
+    }
+    .mood-select {
+      margin-bottom: 1.5em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8em;
+      justify-content: center;
+    }
+    .mood-btn {
+      background: #222;
+      color: #ffd700;
+      border: 2px solid #333;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 0.7em 1.2em;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, border 0.18s, transform 0.1s;
+      outline: none;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      box-shadow: 0 2px 12px #0006;
+    }
+    .mood-btn.selected, .mood-btn:focus {
+      background: linear-gradient(135deg, #ffd700 60%, #ffe066 100%);
+      color: #222;
+      border-color: #ffd700;
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 4px 16px #ffd70055;
+    }
+    .mood-emoji {
+      font-size: 1.5em;
+    }
+    .memo-input {
+      width: 90%;
+      min-height: 2.5em;
+      font-size: 1.1em;
+      border-radius: 10px;
+      border: 2px solid #ffd70066;
+      padding: 0.8em 1em;
+      margin-bottom: 1.3em;
+      background: #181818;
+      color: #fff;
+      resize: vertical;
+      transition: border 0.2s;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .memo-input:focus {
+      border-color: #ffd700;
+      outline: none;
+    }
+    .save-btn {
+      background: linear-gradient(135deg, #ffd700 60%, #ffe066 100%);
+      color: #222;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.15em;
+      font-weight: bold;
+      padding: 0.7em 2.2em;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      box-shadow: 0 2px 12px #ffd70044;
+      transition: background 0.15s, color 0.15s, transform 0.1s;
+    }
+    .save-btn:hover {
+      background: linear-gradient(135deg, #fffde4 60%, #ffd700 100%);
+      color: #111;
+      transform: translateY(-2px) scale(1.03);
+    }
+    .history-list {
+      margin: 2.5rem auto 1.5rem auto;
+      background: rgba(30,30,30,0.93);
+      border-radius: 20px;
+      max-width: 480px;
+      padding: 1.5rem 1rem 1.2rem 1rem;
+      box-shadow: 0 6px 32px #000c;
+      text-align: left;
+    }
+    .history-list h3 {
+      color: #ffd700;
+      font-size: 1.1rem;
+      margin-bottom: 1.1rem;
+      letter-spacing: 0.03em;
+      text-shadow: 0 1px 8px #000;
+    }
+    .history-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .history-list li {
+      margin-bottom: 1.1em;
+      font-size: 1.09rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7em;
+      border-bottom: 1px dashed #444;
+      padding-bottom: 0.65em;
+      word-break: break-all;
+    }
+    .date {
+      color: #ffd700cc;
+      font-size: 0.98em;
+      margin-right: 0.5em;
+      font-family: 'Montserrat', Arial, sans-serif;
+      min-width: 6.5em;
+      display: inline-block;
+    }
+    .memo {
+      color: #b0e0e6;
+      font-size: 0.97em;
+      margin-left: 0.7em;
+      font-style: italic;
+      flex: 1;
+    }
+    .delBtn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: #b0e0e6;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .delBtn:hover { color: #ff4d4d; }
+    @media (max-width: 600px) {
+      .title { font-size: 2.1rem; }
+      .record-box, .history-list { max-width: 98vw; padding: 1.2em 0.4em; }
+    }
   </style>
 </head>
 <body>
-  <h2>오늘의 감정을 기록해보세요</h2>
-  <div class="mood-buttons" id="moodButtons"></div>
-  <div id="historyList">
-    <h3>감정 기록</h3>
-    <ul id="historyUl"></ul>
-  </div>
+  <header>
+    <div class="title">감정 일기</div>
+    <div class="subtitle">오늘의 감정과 한마디를 남겨보세요</div>
+  </header>
+  <main>
+    <div class="record-box">
+      <form id="moodForm" autocomplete="off">
+        <div class="mood-select" id="moodSelect"></div>
+        <textarea class="memo-input" id="memoInput" placeholder="메모(선택)" maxlength="100"></textarea>
+        <br>
+        <button type="submit" class="save-btn">기록하기</button>
+      </form>
+    </div>
+    <div class="history-list">
+      <h3>감정 기록</h3>
+      <ul id="historyUl"></ul>
+    </div>
+  </main>
   <script>
-    // 감정 배열 예시
+    // 감정 배열
     const moods = [
-      { name: "행복", emoji: "😊" },
-      { name: "슬픔", emoji: "😢" },
-      { name: "설렘", emoji: "🤩" },
-      { name: "분노", emoji: "😡" }
+      { name: "행복", emoji: "😊", color: "#FFD700" },
+      { name: "슬픔", emoji: "😢", color: "#708090" },
+      { name: "설렘", emoji: "🤩", color: "#FF8C00" },
+      { name: "분노", emoji: "😡", color: "#DC143C" },
+      { name: "평온", emoji: "😌", color: "#ADD8E6" },
+      { name: "감사", emoji: "🙏", color: "#90EE90" },
+      { name: "자신감", emoji: "😎", color: "#00BFFF" },
+      { name: "외로움", emoji: "🥲", color: "#696969" }
       // ... 더 추가 가능
     ];
 
-    // 버튼 생성
-    const moodButtons = document.getElementById("moodButtons");
-    moods.forEach(mood => {
+    // 감정 선택 버튼 생성
+    const moodSelect = document.getElementById("moodSelect");
+    let selectedMoodIdx = null;
+    moods.forEach((mood, idx) => {
       const btn = document.createElement("button");
-      btn.textContent = `${mood.emoji} ${mood.name}`;
-      btn.onclick = () => saveMood(mood);
-      moodButtons.appendChild(btn);
+      btn.type = "button";
+      btn.className = "mood-btn";
+      btn.innerHTML = `<span class="mood-emoji">${mood.emoji}</span>${mood.name}`;
+      btn.onclick = () => {
+        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedMoodIdx = idx;
+      };
+      moodSelect.appendChild(btn);
     });
 
-    // 감정 기록 저장
-    function saveMood(mood) {
+    // 기록 저장
+    document.getElementById("moodForm").onsubmit = function(e) {
+      e.preventDefault();
+      if (selectedMoodIdx === null) {
+        alert("감정을 선택하세요!");
+        return;
+      }
+      const mood = moods[selectedMoodIdx];
+      const memo = document.getElementById("memoInput").value.trim();
       const today = new Date();
       const dateStr = today.toLocaleDateString() + ' ' + today.toLocaleTimeString();
-      const record = { date: dateStr, name: mood.name, emoji: mood.emoji };
-      // 기존 기록 불러오기
-      const prev = JSON.parse(localStorage.getItem('moodHistory') || '[]');
+      const record = { date: dateStr, name: mood.name, emoji: mood.emoji, color: mood.color, memo: memo };
+      const prev = JSON.parse(localStorage.getItem('moodDiary') || '[]');
       prev.unshift(record); // 최신 기록이 위로
-      localStorage.setItem('moodHistory', JSON.stringify(prev));
+      localStorage.setItem('moodDiary', JSON.stringify(prev));
+      document.getElementById("memoInput").value = "";
+      selectedMoodIdx = null;
+      document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
       renderHistory();
-    }
+    };
 
-    // 감정 기록 출력
+    // 기록 출력
     function renderHistory() {
       const ul = document.getElementById("historyUl");
       ul.innerHTML = '';
-      const history = JSON.parse(localStorage.getItem('moodHistory') || '[]');
-      history.forEach(item => {
+      const history = JSON.parse(localStorage.getItem('moodDiary') || '[]');
+      if (history.length === 0) {
+        ul.innerHTML = `<li style="color:#888;">아직 기록이 없습니다.</li>`;
+        return;
+      }
+      history.forEach((item, idx) => {
         const li = document.createElement("li");
-        li.innerHTML = `<span class="date">${item.date}</span> <span>${item.emoji} ${item.name}</span>`;
+        li.innerHTML = `<span class="date">${item.date}</span>
+          <span style="font-size:1.25em; color:${item.color};">${item.emoji}</span>
+          <span>${item.name}</span>
+          <span class="memo">${item.memo ? "“"+item.memo+"”" : ""}</span>
+          <button class="delBtn" title="삭제" onclick="deleteMood(${idx})">✖</button>`;
         ul.appendChild(li);
       });
+    }
+
+    // 기록 삭제
+    function deleteMood(idx) {
+      const history = JSON.parse(localStorage.getItem('moodDiary') || '[]');
+      history.splice(idx, 1);
+      localStorage.setItem('moodDiary', JSON.stringify(history));
+      renderHistory();
     }
 
     // 페이지 로드 시 기록 표시
