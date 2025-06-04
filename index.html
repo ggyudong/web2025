@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MOODIFY</title>
+  <title>MOODMATE</title>
   <style>
     body {
       margin: 0;
@@ -12,6 +12,8 @@
       font-family: 'Arial Black', 'Montserrat', Arial, sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
+      padding-top: 80px; /* nav 높이만큼 패딩 */
+      transition: background 0.4s;
     }
     nav {
       width: 100vw;
@@ -26,20 +28,21 @@
       padding: 1.2rem 2rem 0.5rem 2rem;
       font-size: 0.9rem;
       letter-spacing: 0.5px;
+      height: 80px;
+      box-sizing: border-box;
     }
     nav div {
       display: flex;
       gap: 2.5vw;
     }
     nav a {
-      color: #fff;
+      color: inherit;
       text-decoration: none;
       font-weight: bold;
       opacity: 0.85;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s, color 0.2s;
     }
     nav a:hover { opacity: 1; }
-
     .main-visual {
       display: flex;
       flex-direction: column;
@@ -47,7 +50,6 @@
       justify-content: flex-start;
       width: 100vw;
       min-height: 60vh;
-      margin-top: 4.5rem;
     }
     .main-title {
       font-size: 9vw;
@@ -59,6 +61,7 @@
       text-transform: uppercase;
       color: #fff;
       word-break: break-all;
+      transition: color 0.4s;
     }
     .main-icons {
       display: flex;
@@ -75,16 +78,16 @@
       display: block;
       filter: brightness(100%) grayscale(0%);
       background: none;
+      transition: filter 0.4s;
     }
-
     .question {
       margin-top: 3vw;
       font-size: 2.2vw;
       font-weight: bold;
       letter-spacing: 0.02em;
       text-align: center;
+      transition: color 0.4s;
     }
-
     .mood-buttons {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
@@ -119,7 +122,6 @@
       font-size: 1.7rem;
       margin-bottom: 0.1rem;
     }
-    /* 결과 영역 */
     #recommend {
       display: none;
       margin: 2vw auto 0 auto;
@@ -129,6 +131,7 @@
       border-radius: 30px;
       box-shadow: 0 4px 32px rgba(0,0,0,0.15);
       color: #fff;
+      transition: background 0.4s, color 0.4s;
     }
     #recommend h2, #recommend h3 { margin-top: 0; }
     #musicFrame { margin-top: 1rem; }
@@ -138,11 +141,12 @@
       .question { font-size: 4.5vw; }
       .mood-buttons { grid-template-columns: repeat(2, 1fr); }
       #recommend { padding: 5vw 2vw; }
+      body { padding-top: 100px; }
     }
   </style>
 </head>
 <body>
-  <nav>
+  <nav id="mainNav">
     <div>
       <a href="#">Journey</a>
       <a href="#">Moods</a>
@@ -153,13 +157,13 @@
     </div>
   </nav>
   <div class="main-visual">
-    <h1 class="main-title">MOODIFY</h1>
+    <h1 class="main-title" id="mainTitle">MOODMATE</h1>
     <div class="main-icons">
       <img src="smile1.png" alt="Smile Icon" />
       <img src="musical-note1.png" alt="Music Note Icon" />
     </div>
   </div>
-  <div class="question">오늘의 기분을 선택해보세요</div>
+  <div class="question" id="mainQuestion">오늘의 기분을 선택해보세요</div>
   <div class="mood-buttons" id="moodButtons"></div>
   <section id="recommend">
     <h3>색상 의미</h3>
@@ -168,7 +172,21 @@
     <iframe id="musicFrame" width="300" height="200" frameborder="0" allowfullscreen></iframe>
   </section>
   <script>
-    // 30가지 감정 데이터 (이모지, 색상, 명언, 음악, 설명)
+    // 대비색(흰/검) 계산 함수[6][7][11][12][15]
+    function contrastColor(hex) {
+      hex = hex.replace('#', '');
+      if (hex.length === 3) {
+        hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+      }
+      var r = parseInt(hex.substr(0,2),16);
+      var g = parseInt(hex.substr(2,2),16);
+      var b = parseInt(hex.substr(4,2),16);
+      // YIQ 공식
+      var yiq = ((r*299)+(g*587)+(b*114))/1000;
+      return (yiq >= 128) ? '#000' : '#fff';
+    }
+
+    // 감정 데이터 (30개, 생략 가능)
     const moodData = [
       { key: '행복', emoji: '😊', color: '#FFD700', quote: '오늘도 웃는 하루 되세요!', music: 'https://www.youtube.com/embed/ZbZSe6N_BXs', desc: '노란색은 에너지와 희망을 상징합니다.' },
       { key: '슬픔', emoji: '😢', color: '#708090', quote: '지금 이 순간도 지나갈 거예요.', music: 'https://www.youtube.com/embed/hLQl3WQQoQ0', desc: '회색은 침착함과 슬픔을 나타냅니다.' },
@@ -212,15 +230,36 @@
       moodButtons.appendChild(btn);
     });
 
-    // 감정 선택 시 정보 출력
+    // 감정 선택 시 정보 출력 및 대비색 적용
     function handleMood(mood) {
       document.body.style.background = mood.color;
+
+      // 대비색 계산
+      const cColor = contrastColor(mood.color);
+      // 주요 텍스트/네비/타이틀/질문/아이콘에 적용
+      document.body.style.color = cColor;
+      document.getElementById("mainTitle").style.color = cColor;
+      document.getElementById("mainQuestion").style.color = cColor;
+      document.querySelectorAll("nav a").forEach(a => a.style.color = cColor);
+      // 아이콘은 흰색/검정 둘 다 잘 보이므로 특별히 조정 필요없음
+
+      // 결과 영역
       document.getElementById("colorDesc").innerText = mood.desc;
       document.getElementById("quote").innerText = mood.quote;
       document.getElementById("musicFrame").src = mood.music;
       document.getElementById("recommend").style.display = "block";
+      document.getElementById("recommend").style.color = cColor;
       document.getElementById("recommend").scrollIntoView({ behavior: "smooth" });
     }
+
+    // 초기화: 검정 배경, 흰색 글씨
+    window.addEventListener('DOMContentLoaded', () => {
+      document.body.style.background = "#000";
+      document.body.style.color = "#fff";
+      document.getElementById("mainTitle").style.color = "#fff";
+      document.getElementById("mainQuestion").style.color = "#fff";
+      document.querySelectorAll("nav a").forEach(a => a.style.color = "#fff");
+    });
   </script>
 </body>
 </html>
