@@ -1,99 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <!-- 기본 설정 및 문자 인코딩 -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MoodMate</title>
-
-  <!-- 전체 스타일 정의 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MoodMate Modern</title>
+  <!-- Google Fonts & Font Awesome for icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
   <style>
     body {
       margin: 0;
-      font-family: 'Arial Black', sans-serif;
-      background-color: #000;
-      color: #fff;
-      text-align: center;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #222;
+      min-height: 100vh;
     }
     nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 60px;
-      background-color: black;
-      z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 2rem;
+      background: #222;
+      color: #fff;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky; top: 0; z-index: 100;
     }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 0.9rem;
-      margin: 0 1rem;
-      font-weight: bold;
-    }
+    nav a { color: #fff; text-decoration: none; margin: 0 1rem; font-weight: bold;}
+    nav a:hover { text-decoration: underline; }
     header {
-      position: fixed;
-      top: 60px;
-      width: 100%;
-      background-color: black;
-      z-index: 999;
-      padding-top: 2rem;
-      padding-bottom: 2rem;
+      margin-top: 3rem;
+      text-align: center;
     }
     header h1 {
-      font-size: 5rem;
-      margin: 1rem 0;
-      font-weight: bold;
+      font-size: 3rem;
+      letter-spacing: 2px;
+      color: #333;
+      margin-bottom: 0.5rem;
     }
-    .images {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-    .images img {
-      width: 200px;
-      height: auto;
-    }
-    .question {
-      margin-top: 420px;
-      font-size: 2rem;
-    }
-    .mood-buttons {
-      margin-top: 2rem;
+    .mood-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1rem;
+      gap: 1.5rem;
+      margin: 2rem 0;
     }
-    .mood-buttons button {
-      padding: 1rem 2rem;
-      border: none;
+    .mood-card {
+      background: #fff;
       border-radius: 20px;
-      font-size: 1rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 1.5rem 1.2rem;
+      width: 120px;
+      text-align: center;
       cursor: pointer;
-      font-weight: bold;
+      transition: transform 0.15s, box-shadow 0.15s;
+      font-size: 1.1rem;
+      position: relative;
     }
-    #recommend {
-      margin-top: 5rem;
-      padding: 3rem 1rem;
+    .mood-card:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 6px 32px rgba(0,0,0,0.12);
+    }
+    .mood-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    #result-section {
       display: flex;
-      justify-content: center;
-      gap: 2rem;
-      align-items: flex-start;
       flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem;
+      margin: 3rem 0;
+      padding: 2rem 1rem;
+      background: rgba(255,255,255,0.8);
+      border-radius: 30px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .color-desc {
+    .result-img {
+      width: 250px; height: 250px; object-fit: cover; border-radius: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      margin-bottom: 1rem;
+    }
+    .result-desc {
+      flex: 1;
+      min-width: 250px;
       text-align: left;
-      max-width: 300px;
     }
-    iframe {
-      margin-top: 1rem;
+    .result-desc h2 { margin-top: 0; }
+    .quote { font-size: 1.2rem; color: #444; margin: 1.5rem 0 0.5rem 0;}
+    .music { margin-top: 1rem;}
+    @media (max-width: 700px) {
+      #result-section { flex-direction: column; align-items: center;}
+      .result-img { width: 90vw; height: 40vw; }
     }
   </style>
 </head>
@@ -109,109 +111,72 @@
     </div>
   </nav>
   <header>
-    <h1>MOODMATE</h1>
-    <div class="images">
-      <img src="smile1.png" alt="Smile Icon" />
-      <img src="musical-note1.png" alt="Music Note Icon" />
-    </div>
+    <h1>MoodMate</h1>
+    <div style="color:#888; font-size:1.1rem;">오늘의 감정을 선택해보세요!</div>
   </header>
-  <div class="question">오늘의 기분은 어떤가요?</div>
-  <div class="mood-buttons" id="moodButtons"></div>
-  <section id="recommend">
-    <div class="color-desc">
-      <h3>색상 의미</h3>
-      <p id="colorDesc">감정에 따른 색상 의미가 여기에 표시됩니다.</p>
-    </div>
-    <div>
-      <h2 id="quote">여기에 명언이 표시됩니다</h2>
-      <iframe id="musicFrame" width="300" height="200" frameborder="0" allowfullscreen></iframe>
+  <div class="mood-grid" id="moodGrid"></div>
+  <section id="result-section" style="display:none;">
+    <img id="moodImg" class="result-img" src="" alt="Mood Image"/>
+    <div class="result-desc">
+      <h2 id="moodTitle"></h2>
+      <div id="colorDesc"></div>
+      <div class="quote" id="quote"></div>
+      <div class="music" id="music"></div>
     </div>
   </section>
   <script>
-    // 접속 시마다 배경색과 타이틀 색 랜덤 적용
-    window.addEventListener("DOMContentLoaded", () => {
-      const colors = ["#FFD700", "#FF69B4", "#87CEFA", "#98FB98", "#FFA07A", "#DA70D6"];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      document.body.style.backgroundColor = randomColor;
-      const title = document.querySelector("header h1");
-      if (title) {
-        title.style.color = colors[Math.floor(Math.random() * colors.length)];
-      }
+    // 감정 데이터 (이모지, 색상, 설명, 유튜브 플레이리스트)
+    const moods = [
+      { key: 'happy', emoji: '😊', color: '#FFD700', desc: '행복은 에너지와 희망을 줍니다.', yt: 'PLrEnWoR732-BHrPp_Pm8_VleD68f9s14-' },
+      { key: 'sad', emoji: '😢', color: '#708090', desc: '슬픔은 때로 성장의 밑거름이 됩니다.', yt: 'PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj' },
+      { key: 'excited', emoji: '🤩', color: '#FF8C00', desc: '설렘은 새로운 시작의 신호!', yt: 'PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI' },
+      { key: 'calm', emoji: '😌', color: '#ADD8E6', desc: '평온함은 마음의 안식처.', yt: 'PLSDoVPMU6pT1r7dQwKf6k8xq2iUq7qK8m' },
+      { key: 'angry', emoji: '😡', color: '#DC143C', desc: '화는 때로 변화를 이끕니다.', yt: 'PLDcnymzs18LVXfO_x0Ei0R24qDbVtyy66' },
+      { key: 'relaxed', emoji: '🧘‍♂️', color: '#AFEEEE', desc: '이완은 재충전의 시간.', yt: 'PLSDoVPMU6pT1r7dQwKf6k8xq2iUq7qK8m' },
+      { key: 'anxious', emoji: '😰', color: '#E0FFFF', desc: '불안은 누구나 느낄 수 있어요.', yt: 'PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj' },
+      { key: 'thankful', emoji: '🙏', color: '#90EE90', desc: '감사함이 행복을 부릅니다.', yt: 'PLrEnWoR732-BHrPp_Pm8_VleD68f9s14-' },
+      // 원하는 만큼 추가 가능
+    ];
+
+    // 감정 카드 생성
+    const moodGrid = document.getElementById('moodGrid');
+    moods.forEach(mood => {
+      const card = document.createElement('div');
+      card.className = 'mood-card';
+      card.style.border = `2px solid ${mood.color}`;
+      card.innerHTML = `<span class="mood-emoji">${mood.emoji}</span>${mood.key}`;
+      card.onclick = () => selectMood(mood);
+      moodGrid.appendChild(card);
     });
 
-    // 감정별 데이터 정의
-    const moodData = {
-      joyful: { color: "#FFDAB9", quote: "기쁨은 나누면 두 배가 됩니다!", music: "https://www.youtube.com/embed/tgbNymZ7vqY", desc: "복숭아색은 부드럽고 따뜻한 기쁨을 전달합니다." },
-      peaceful: { color: "#E6E6FA", quote: "고요한 순간에 집중해보세요.", music: "https://www.youtube.com/embed/JfVOs4VSpmA", desc: "라벤더색은 편안함과 명상을 상징합니다." },
-      hopeful: { color: "#00CED1", quote: "희망은 언젠가 현실이 됩니다.", music: "https://www.youtube.com/embed/X1DRDcGlSsE", desc: "청록색은 미래에 대한 희망과 가능성을 상징합니다." },
-      proud: { color: "#B22222", quote: "스스로를 자랑스럽게 여겨도 괜찮아요!", music: "https://www.youtube.com/embed/zpOULjyy-n8", desc: "파이어브릭은 자긍심과 결단력을 의미합니다." },
-      anxious: { color: "#E0FFFF", quote: "불안은 누구에게나 있는 감정이에요.", music: "https://www.youtube.com/embed/OpQFFLBMEPI", desc: "하늘빛은 민감하고 섬세한 감정을 반영합니다." },
-      curious: { color: "#20B2AA", quote: "호기심은 성장의 첫 걸음입니다!", music: "https://www.youtube.com/embed/09R8_2nJtjg", desc: "중청록은 탐험과 배움을 나타냅니다." },
-      lonely: { color: "#696969", quote: "혼자인 시간도 나를 위한 시간이 될 수 있어요.", music: "https://www.youtube.com/embed/fLexgOxsZu0", desc: "어두운 회색은 고독과 내면 탐색을 상징합니다." },
-      relaxed: { color: "#AFEEEE", quote: "한숨 돌리는 것도 중요해요.", music: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "페일터콰이즈는 여유와 이완을 의미합니다." },
-      focused: { color: "#4682B4", quote: "집중은 최고의 무기입니다.", music: "https://www.youtube.com/embed/e-ORhEE9VVg", desc: "스틸블루는 명확한 사고와 집중력을 나타냅니다." },
-      adventurous: { color: "#FF4500", quote: "지금이 도전할 순간입니다!", music: "https://www.youtube.com/embed/kXYiU_JCYtU", desc: "오렌지레드는 도전과 열정을 의미합니다." },
-      nostalgic: { color: "#D8BFD8", quote: "추억은 마음속의 보석입니다.", music: "https://www.youtube.com/embed/fJ9rUzIMcZQ", desc: "연보라색은 향수와 감성 회상을 표현합니다." },
-      embarrassed: { color: "#FFB6C1", quote: "부끄러움도 귀여운 감정이에요.", music: "https://www.youtube.com/embed/Xn676-fLq7I", desc: "연분홍은 순수함과 수줍음을 나타냅니다." },
-      scared: { color: "#8B0000", quote: "두려움을 이겨내는 당신이 대단해요!", music: "https://www.youtube.com/embed/uelHwf8o7_U", desc: "다크레드는 위험과 긴장을 상징합니다." },
-      shocked: { color: "#FF00FF", quote: "세상은 언제나 놀라움을 줍니다!", music: "https://www.youtube.com/embed/LsoLEjrDogU", desc: "마젠타는 놀람과 강렬한 감정을 표현합니다." },
-      thankful: { color: "#90EE90", quote: "감사하는 마음이 행복을 부릅니다.", music: "https://www.youtube.com/embed/lWA2pjMjpBs", desc: "연녹색은 따뜻함과 감사함을 의미합니다." },
-      happy: {
-        color: "#FFD700",
-        quote: "오늘도 웃는 하루 되세요!",
-        music: "https://www.youtube.com/embed/ZbZSe6N_BXs",
-        desc: "노란색은 에너지와 희망을 상징합니다."
-      },
-      sad: {
-        color: "#708090",
-        quote: "지금 이 순간도 지나갈 거예요.",
-        music: "https://www.youtube.com/embed/hLQl3WQQoQ0",
-        desc: "회색은 침착함과 슬픔을 나타냅니다."
-      },
-      tired: {
-        color: "#A9A9A9",
-        quote: "조금 쉬어도 괜찮아요.",
-        music: "https://www.youtube.com/embed/jfKfPfyJRdk",
-        desc: "어두운 회색은 휴식이 필요함을 암시합니다."
-      },
-      calm: {
-        color: "#ADD8E6",
-        quote: "마음이 편안해지는 순간이에요.",
-        music: "https://www.youtube.com/embed/2Vv-BfVoq4g",
-        desc: "하늘색은 평온과 안정감을 줍니다."
-      },
-      angry: {
-        color: "#DC143C",
-        quote: "화는 지나가고 평화는 돌아옵니다.",
-        music: "https://www.youtube.com/embed/O-dNDV6xC1U",
-        desc: "강렬한 붉은색은 분노와 열정을 상징합니다."
-      },
-      excited: {
-        color: "#FF8C00",
-        quote: "설렘이 가득한 하루 되세요!",
-        music: "https://www.youtube.com/embed/kJQP7kiw5Fk",
-        desc: "주황은 활력과 흥분을 표현합니다."
-      }
-    };
+    // 감정 선택 핸들러
+    async function selectMood(mood) {
+      // 1. 배경색 부드럽게 변경
+      document.body.style.transition = 'background 0.6s';
+      document.body.style.background = `linear-gradient(135deg, ${mood.color} 0%, #f5f7fa 100%)`;
 
-    // 버튼 동적 생성
-    const moodButtons = document.getElementById("moodButtons");
-    Object.keys(moodData).forEach(mood => {
-      const btn = document.createElement("button");
-      btn.innerText = mood;
-      btn.style.backgroundColor = moodData[mood].color;
-      btn.onclick = () => handleMood(mood);
-      moodButtons.appendChild(btn);
-    });
+      // 2. 감정 타이틀/설명
+      document.getElementById('moodTitle').innerHTML = `${mood.emoji} <span style="color:${mood.color}">${mood.key.toUpperCase()}</span>`;
+      document.getElementById('colorDesc').innerText = mood.desc;
 
-    // 감정 선택 시 정보 출력
-    function handleMood(mood) {
-      const data = moodData[mood];
-      document.body.style.backgroundColor = data.color;
-      document.getElementById("quote").innerText = data.quote;
-      document.getElementById("musicFrame").src = data.music;
-      document.getElementById("colorDesc").innerText = data.desc;
-      document.getElementById("recommend").scrollIntoView({ behavior: "smooth" });
+      // 3. Unsplash API로 감정에 맞는 이미지 추천
+      const imgRes = await fetch(`https://api.unsplash.com/photos/random?query=${mood.key}&orientation=squarish&client_id=YOUR_UNSPLASH_ACCESS_KEY`);
+      const imgData = await imgRes.json();
+      document.getElementById('moodImg').src = imgData.urls.small;
+
+      // 4. Quotable API로 명언 받아오기
+      const quoteRes = await fetch(`https://api.quotable.io/random?tags=${mood.key}`);
+      const quoteData = await quoteRes.json();
+      document.getElementById('quote').innerText = quoteData.content + ' — ' + quoteData.author;
+
+      // 5. 유튜브 플레이리스트 임베딩 (감정별)
+      document.getElementById('music').innerHTML = `
+        <iframe width="300" height="180" src="https://www.youtube.com/embed/videoseries?list=${mood.yt}" frameborder="0" allowfullscreen></iframe>
+      `;
+
+      // 6. 결과 섹션 표시
+      document.getElementById('result-section').style.display = 'flex';
+      document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
