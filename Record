@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>감정 기록 예시</title>
+  <style>
+    .mood-buttons { margin: 2rem 0; }
+    .mood-buttons button { font-size: 1.2rem; margin: 0 0.5rem; padding: 0.7em 1.2em; }
+    #historyList { margin: 2rem 0; }
+    #historyList ul { list-style: none; padding: 0; }
+    #historyList li { margin-bottom: 0.7em; font-size: 1.1rem; }
+    .date { color: #888; font-size: 0.95em; margin-right: 0.5em; }
+  </style>
+</head>
+<body>
+  <h2>오늘의 감정을 기록해보세요</h2>
+  <div class="mood-buttons" id="moodButtons"></div>
+  <div id="historyList">
+    <h3>감정 기록</h3>
+    <ul id="historyUl"></ul>
+  </div>
+  <script>
+    // 감정 배열 예시
+    const moods = [
+      { name: "행복", emoji: "😊" },
+      { name: "슬픔", emoji: "😢" },
+      { name: "설렘", emoji: "🤩" },
+      { name: "분노", emoji: "😡" }
+      // ... 더 추가 가능
+    ];
+
+    // 버튼 생성
+    const moodButtons = document.getElementById("moodButtons");
+    moods.forEach(mood => {
+      const btn = document.createElement("button");
+      btn.textContent = `${mood.emoji} ${mood.name}`;
+      btn.onclick = () => saveMood(mood);
+      moodButtons.appendChild(btn);
+    });
+
+    // 감정 기록 저장
+    function saveMood(mood) {
+      const today = new Date();
+      const dateStr = today.toLocaleDateString() + ' ' + today.toLocaleTimeString();
+      const record = { date: dateStr, name: mood.name, emoji: mood.emoji };
+      // 기존 기록 불러오기
+      const prev = JSON.parse(localStorage.getItem('moodHistory') || '[]');
+      prev.unshift(record); // 최신 기록이 위로
+      localStorage.setItem('moodHistory', JSON.stringify(prev));
+      renderHistory();
+    }
+
+    // 감정 기록 출력
+    function renderHistory() {
+      const ul = document.getElementById("historyUl");
+      ul.innerHTML = '';
+      const history = JSON.parse(localStorage.getItem('moodHistory') || '[]');
+      history.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `<span class="date">${item.date}</span> <span>${item.emoji} ${item.name}</span>`;
+        ul.appendChild(li);
+      });
+    }
+
+    // 페이지 로드 시 기록 표시
+    renderHistory();
+  </script>
+</body>
+</html>
