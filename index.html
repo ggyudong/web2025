@@ -5,123 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MOODMATE</title>
   <style>
-    body {
-      margin: 0;
-      background: #000;
-      color: #fff;
-      font-family: 'Arial Black', 'Montserrat', Arial, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-      padding-top: 80px; /* nav 높이만큼 패딩 */
-      transition: background 0.4s;
-    }
-    nav {
-      width: 100vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 100;
-      background: transparent;
-      padding: 1.2rem 2rem 0.5rem 2rem;
-      font-size: 0.9rem;
-      letter-spacing: 0.5px;
-      height: 80px;
-      box-sizing: border-box;
-    }
-    nav div {
-      display: flex;
-      gap: 2.5vw;
-    }
-    nav a {
-      color: inherit;
-      text-decoration: none;
-      font-weight: bold;
-      opacity: 0.85;
-      transition: opacity 0.2s, color 0.2s;
-    }
-    nav a:hover { opacity: 1; }
-    .main-visual {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      width: 100vw;
-      min-height: 60vh;
-    }
-    .main-title {
-      font-size: 9vw;
-      font-weight: 900;
-      letter-spacing: 0.03em;
-      margin: 0;
-      line-height: 1.05;
-      text-align: center;
-      text-transform: uppercase;
-      color: #fff;
-      word-break: break-all;
-      transition: color 0.4s;
-    }
-    .main-icons {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 8vw;
-      margin-top: 1vw;
-    }
-    .main-icons img {
-      width: 23vw;
-      min-width: 120px;
-      max-width: 320px;
-      height: auto;
-      display: block;
-      filter: brightness(100%) grayscale(0%);
-      background: none;
-      transition: filter 0.4s;
-    }
-    .question {
-      margin-top: 3vw;
-      font-size: 2.2vw;
-      font-weight: bold;
-      letter-spacing: 0.02em;
-      text-align: center;
-      transition: color 0.4s;
-    }
-    .mood-buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-      gap: 1.1rem;
-      max-width: 1100px;
-      margin: 2vw auto 0 auto;
-      padding: 0 2vw 3vw 2vw;
-    }
-    .mood-buttons button {
-      background: #111;
-      color: #fff;
-      border: 2px solid #fff;
-      border-radius: 18px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      padding: 1.1rem 0.2rem;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s, border 0.15s;
-      outline: none;
-      letter-spacing: 0.02em;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.2rem;
-    }
-    .mood-buttons button:hover, .mood-buttons button:focus {
-      background: #fff;
-      color: #000;
-      border-color: #fff;
-    }
-    .mood-emoji {
-      font-size: 1.7rem;
-      margin-bottom: 0.1rem;
-    }
+    /* ... 기존 스타일 ... */
     #recommend {
       display: none;
       margin: 2vw auto 0 auto;
@@ -130,72 +14,52 @@
       background: rgba(20,20,20,0.96);
       border-radius: 30px;
       box-shadow: 0 4px 32px rgba(0,0,0,0.15);
-      color: #fff;
+      color: #fff !important;
       transition: background 0.4s, color 0.4s;
+      text-align: center;
     }
-    #recommend h2, #recommend h3 { margin-top: 0; }
-    #musicFrame { margin-top: 1rem; }
-    @media (max-width: 700px) {
-      .main-title { font-size: 14vw; }
-      .main-icons img { width: 33vw; min-width: 70px; }
-      .question { font-size: 4.5vw; }
-      .mood-buttons { grid-template-columns: repeat(2, 1fr); }
-      #recommend { padding: 5vw 2vw; }
-      body { padding-top: 100px; }
+    #recommend h3 {
+      font-size: 1.3rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
+      color: #ffd700;
+      font-weight: bold;
     }
-      #recommend {
-    display: none;
-    margin: 2vw auto 0 auto;
-    max-width: 900px;
-    padding: 2vw 2vw 3vw 2vw;
-    background: rgba(20,20,20,0.96);
-    border-radius: 30px;
-    box-shadow: 0 4px 32px rgba(0,0,0,0.15);
-    color: #fff !important;
-    transition: background 0.4s, color 0.4s;
-    text-align: center;
-  }
-  #recommend h3 {
-    font-size: 1.3rem;
-    letter-spacing: 0.03em;
-    margin-bottom: 1rem;
-    color: #ffd700;
-    font-weight: bold;
-  }
-  #colorDesc {
-    font-size: 1.15rem;
-    margin-bottom: 1.2rem;
-    font-weight: 500;
-    color: #b0e0e6;
-  }
-  #quote {
-    font-size: 1.5rem;
-    font-style: italic;
-    margin-bottom: 1.5rem;
-    color: #f0e68c;
-    font-weight: 600;
-    text-shadow: 0 1px 8px #222;
-  }
-  #musicFrame {
-    width: 100%;
-    max-width: 600px;
-    height: 340px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    margin: 0 auto;
-    display: block;
-  }
+    #colorDesc {
+      font-size: 1.15rem;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+      color: #b0e0e6;
+    }
+    #quote {
+      font-size: 1.5rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      color: #f0e68c;
+      font-weight: 600;
+      text-shadow: 0 1px 8px #222;
+    }
+    #musicFrame {
+      width: 100%;
+      max-width: 600px;
+      height: 340px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      margin: 0 auto;
+      display: block;
+    }
   </style>
 </head>
 <body>
+  <!-- 네비게이션, 타이틀, 아이콘 등은 기존 코드 유지 -->
   <nav id="mainNav">
     <div>
-      <a href="#">Journey</a>
-      <a href="#">Moods</a>
+      <a href="#">About</a>
+      <a href="#">Diary</a>
     </div>
     <div>
-      <a href="#">Inspire</a>
-      <a href="#">Connect</a>
+      <a href="#">Gallery</a>
+      <a href="#">Feedback</a>
     </div>
   </nav>
   <div class="main-visual">
@@ -211,10 +75,17 @@
     <h3>색상 의미</h3>
     <p id="colorDesc"></p>
     <h2 id="quote"></h2>
-    <iframe id="musicFrame" width="300" height="200" frameborder="0" allowfullscreen></iframe>
+    <button id="newQuoteBtn" style="margin-bottom:1.2rem; font-size:1rem; padding:0.5em 1em; border-radius:10px; border:none; background:#ffd700; color:#222; font-weight:bold; cursor:pointer;">다른 명언 보기</button>
+    <div style="margin: 1.5rem 0 0.7rem 0;">
+      <button id="newMusicBtn" style="font-size:1rem; padding:0.5em 1em; border-radius:10px; border:none; background:#b0e0e6; color:#222; font-weight:bold; cursor:pointer;">다른 음악 추천</button>
+    </div>
+    <iframe id="musicFrame" width="600" height="340" frameborder="0" allowfullscreen></iframe>
   </section>
   <script>
-    // 대비색(흰/검) 계산 함수[6][7][11][12][15]
+    // --- 유튜브 API 키 입력 ---
+    const YOUTUBE_API_KEY = "AIzaSyBIYhwrDCXF_vmthZiJ2akCfxhc_7qKCzo"; // API 키 입력
+
+    // --- 대비색(흰/검) 계산 함수 ---
     function contrastColor(hex) {
       hex = hex.replace('#', '');
       if (hex.length === 3) {
@@ -223,12 +94,11 @@
       var r = parseInt(hex.substr(0,2),16);
       var g = parseInt(hex.substr(2,2),16);
       var b = parseInt(hex.substr(4,2),16);
-      // YIQ 공식
       var yiq = ((r*299)+(g*587)+(b*114))/1000;
       return (yiq >= 128) ? '#000' : '#fff';
     }
 
-    // 감정 데이터 (30개, 생략 가능)
+    // --- 감정 데이터 (30개, 일부만 예시) ---
     const moodData = [
       { key: '행복', emoji: '😊', color: '#FFD700', quote: '오늘도 웃는 하루 되세요!', music: 'https://www.youtube.com/embed/ZbZSe6N_BXs', desc: '노란색은 에너지와 희망을 상징합니다.' },
       { key: '슬픔', emoji: '😢', color: '#708090', quote: '지금 이 순간도 지나갈 거예요.', music: 'https://www.youtube.com/embed/hLQl3WQQoQ0', desc: '회색은 침착함과 슬픔을 나타냅니다.' },
@@ -262,7 +132,7 @@
       { key: '놀람', emoji: '😲', color: '#FF00FF', quote: '세상은 언제나 놀라움을 줍니다!', music: 'https://www.youtube.com/embed/LsoLEjrDogU', desc: '마젠타는 놀람과 강렬한 감정을 표현합니다.' }
     ];
 
-    // 버튼 동적 생성
+    // --- 감정 버튼 동적 생성 ---
     const moodButtons = document.getElementById("moodButtons");
     moodData.forEach(mood => {
       const btn = document.createElement("button");
@@ -272,29 +142,71 @@
       moodButtons.appendChild(btn);
     });
 
-    // 감정 선택 시 정보 출력 및 대비색 적용
-    function handleMood(mood) {
-      document.body.style.background = mood.color;
+    // --- 현재 선택된 감정 저장 ---
+    let currentMood = null;
 
-      // 대비색 계산
+    // --- 감정 선택 시 정보 표시 ---
+    function handleMood(mood) {
+      currentMood = mood;
+      // 배경색 변경 및 대비색 적용
+      document.body.style.background = mood.color;
       const cColor = contrastColor(mood.color);
-      // 주요 텍스트/네비/타이틀/질문/아이콘에 적용
       document.body.style.color = cColor;
       document.getElementById("mainTitle").style.color = cColor;
       document.getElementById("mainQuestion").style.color = cColor;
       document.querySelectorAll("nav a").forEach(a => a.style.color = cColor);
-      // 아이콘은 흰색/검정 둘 다 잘 보이므로 특별히 조정 필요없음
-
-      // 결과 영역
+      // 색상 의미
       document.getElementById("colorDesc").innerText = mood.desc;
-      document.getElementById("quote").innerText = mood.quote;
-      document.getElementById("musicFrame").src = mood.music;
+      // 명언, 유튜브 랜덤 호출
+      fetchRandomQuote();
+      fetchRandomYoutube(mood.youtube);
+      // 결과 박스 표시
       document.getElementById("recommend").style.display = "block";
-      document.getElementById("recommend").style.color = cColor;
       document.getElementById("recommend").scrollIntoView({ behavior: "smooth" });
     }
 
-    // 초기화: 검정 배경, 흰색 글씨
+    // --- 명언 API에서 랜덤 명언 받아오기 ---
+    function fetchRandomQuote() {
+      fetch('https://api.quotable.io/random')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("quote").innerText = `"${data.content}"\n- ${data.author}`;
+        })
+        .catch(() => {
+          document.getElementById("quote").innerText = "명언을 불러올 수 없습니다.";
+        });
+    }
+
+    // --- 유튜브 API에서 감정별 랜덤 영상 받아오기 ---
+    function fetchRandomYoutube(keyword) {
+      // API 호출: 감정 키워드로 10개 영상 검색
+      fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${encodeURIComponent(keyword)}&key=${YOUTUBE_API_KEY}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.items && data.items.length > 0) {
+            const random = data.items[Math.floor(Math.random() * data.items.length)];
+            const videoId = random.id.videoId;
+            document.getElementById("musicFrame").src = `https://www.youtube.com/embed/${videoId}`;
+          } else {
+            document.getElementById("musicFrame").src = "";
+          }
+        })
+        .catch(() => {
+          document.getElementById("musicFrame").src = "";
+        });
+    }
+
+    // --- "다른 명언 보기" 버튼 클릭 시 ---
+    document.getElementById("newQuoteBtn").onclick = function() {
+      fetchRandomQuote();
+    };
+
+    // --- "다른 음악 추천" 버튼 클릭 시 ---
+    document.getElementById("newMusicBtn").onclick = function() {
+      if (currentMood) fetchRandomYoutube(currentMood.youtube);
+    };
+
+    // --- 초기화: 검정 배경, 흰색 글씨 ---
     window.addEventListener('DOMContentLoaded', () => {
       document.body.style.background = "#000";
       document.body.style.color = "#fff";
