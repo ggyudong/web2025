@@ -13,19 +13,24 @@
     <div class="end"></div>
   </div>
   <script> 
- let coffee = "아메리카노";
- const order = new Promise(resolve => {
-   console.log(`${coffee} 주문 접수`);
-     setTimeout(() => {
-       resolve(coffee);
-     }, 3000);
-  });
+    let coffee = "아메리카노";
+    const order = new Promise(resolve => {
+      // 주문 접수 메시지를 화면에 표시
+      document.querySelector('.start').innerText = `${coffee} 주문 접수`;
+      setTimeout(() => {
+        resolve(coffee);
+      }, 3000);
+    });
 
-  function display(result) {
-   console.log(`${result} 준비 완료 🥤 `);
- }
+    function display(result) {
+      // 준비 완료 메시지를 화면에 표시
+      document.querySelector('.end').innerText = `${result} 준비 완료 🥤`;
+      // 추가로, 시각적 효과를 주고 싶으면 아래처럼 클래스 추가
+      document.querySelector('.end').classList.add('active');
+      document.querySelector('.start').classList.add('done');
+    }
 
-  order.then(display);
+    order.then(display);
   </script>
 </body>
 </html>
