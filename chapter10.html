@@ -1,32 +1,34 @@
-<HTML>
+<!DOCTYPE html>
+<html>
 <head>
   <title>이메일 줄이기</title>
 </head>
 <body>
   <div id="userInput">
     <label>
-      <input type="email" />
+      <input type="email" id="userEmail" />
     </label>
     <button>실행</button>
   </div>
 
-<div id="result"></div>
+  <div id="result"></div>
+
   <script>
-const email = document.querySelector("#userEmail");
-const button = document.querySelector("button");
-const result = document.querySelector("#result");
+    const email = document.querySelector("#userEmail");
+    const button = document.querySelector("button");
+    const result = document.querySelector("#result");
 
-button.addEventListener("click", function () {
-  let username, domain;
+    button.addEventListener("click", function () {
+      let username, domain;
 
-  if (email.value !== "") {
-    username = email.value.split("@")[0];
-    domain = email.value.split("@")[1];
-    username = username.substring(0, 3);
-    result.innerText = `${username}...@${domain}`;
-    email.value = "";
-  }
-});
+      if (email.value !== "") {
+        username = email.value.split("@")[0];
+        domain = email.value.split("@")[1];
+        username = username.substring(0, 3);
+        result.innerText = `${username}...@${domain}`;
+        email.value = "";
+      }
+    });
   </script>
-  </body>
-</HTML>
+</body>
+</html>
